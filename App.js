@@ -1,23 +1,19 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import Login from './components/Login';
-import SetDateAndTime from './components/CreateNotification/SetDateAndTime/SetDateAndTime';
+// import Login from './components/Login';
+import styled from 'styled-components/native';
+import CreateNotification from './components/CreateNotification/CreateNotification';
 
 const App = () => {
   return (
-    <View style={styles.app}>
+    <Wrapper>
       {/* <Login /> */}
-      <SetDateAndTime />
-    </View>
+      <CreateNotification />
+    </Wrapper>
   );
 };
 
 export default App;
 
-const styles = StyleSheet.create({
-  app: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+const Wrapper = styled.View`
+  flex: 1;
+`;
