@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
+import {TouchableOpacity, View} from 'react-native';
 import {Icon} from 'react-native-elements';
 import styled from 'styled-components/native';
-import {View, TouchableOpacity} from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import moment from 'moment';
 
 const DatePickerWrapper = styled.View`
-  margin-top: 12;
+  margin-top: 7;
   border-radius: 15;
   background-color: #ffffff;
 `;
@@ -13,14 +15,14 @@ const SelectDateWrapper = styled.View`
   flex-direction: row;
   justify-content: space-between;
   padding-bottom: 10;
-  padding-left: 15;
-  padding-right: 10;
+  padding-horizontal: 10;
 `;
 
 const DayText = styled.Text`
   font-size: 15;
   color: #98979c;
   font-style: italic;
+  text-align: center;
 `;
 const TextWrapper = styled.View`
   flex-direction: row;
@@ -29,46 +31,130 @@ const TextWrapper = styled.View`
   padding-top: 5px;
   padding-bottom: 10px;
 `;
-const DatePicker = () => {
-  const [active, setActive] = React.useState(1);
-  const [Date] = useState([
-    {day: 'Sun', date: '1'},
-    {day: 'Mon', date: '2'},
-    {day: 'Tue', date: '3'},
-    {day: 'Wed', date: '4'},
-    {day: 'Thu', date: '5'},
-    {day: 'Fri', date: '6'},
-    {day: 'Sat', date: '7'},
-  ]);
+const DatePickerComponent = () => {
+  const [date, setDate] = useState(new Date());
+  const [active, setActive] = useState(1);
+  const [show, toggleCalendar] = useState(false);
+  const [selected, setSelected] = useState();
+
+  const selectedDate = [
+    {
+      key: 1,
+      day: moment(selected)
+        .format('dddd')
+        .toString()
+        .slice(0, 3),
+      date: moment(selected),
+    },
+    {
+      key: 2,
+      day: moment(selected)
+        .add(1, 'days')
+        .format('dddd')
+        .toString()
+        .slice(0, 3),
+      date: moment(selected).add(1, 'days'),
+    },
+    {
+      key: 3,
+      day: moment(selected)
+        .add(2, 'days')
+        .format('dddd')
+        .toString()
+        .slice(0, 3),
+      date: moment(selected).add(2, 'days'),
+    },
+    {
+      key: 4,
+      day: moment(selected)
+        .add(3, 'days')
+        .format('dddd')
+        .toString()
+        .slice(0, 3),
+      date: moment(selected).add(3, 'days'),
+    },
+    {
+      key: 5,
+      day: moment(selected)
+        .add(4, 'days')
+        .format('dddd')
+        .toString()
+        .slice(0, 3),
+      date: moment(selected).add(4, 'days'),
+    },
+    {
+      key: 6,
+      day: moment(selected)
+        .add(5, 'days')
+        .format('dddd')
+        .toString()
+        .slice(0, 3),
+      date: moment(selected).add(5, 'days'),
+    },
+    {
+      key: 7,
+      day: moment(selected)
+        .add(6, 'days')
+        .format('dddd')
+        .toString()
+        .slice(0, 3),
+      date: moment(selected).add(6, 'days'),
+    },
+  ];
 
   return (
-    <DatePickerWrapper>
-      <TextWrapper>
-        <DateAndTime>15 November 2018</DateAndTime>
-        <TouchableOpacity>
-          <Icon
-            type="MaterialIcons"
-            name="add-circle"
-            size={43}
-            color="#3bc48e"
-          />
-        </TouchableOpacity>
-      </TextWrapper>
-      <SelectDateWrapper>
-        {Date.map((d, i) => {
-          return (
-            <View key={i}>
-              <DayText>{d.day}</DayText>
-              <DatesContainer
-                active={d.date === active}
-                onPress={() => setActive(d.date)}>
-                <Dates active={d.date === active}>{d.date}</Dates>
-              </DatesContainer>
-            </View>
-          );
-        })}
-      </SelectDateWrapper>
-    </DatePickerWrapper>
+    <>
+      <DatePickerWrapper>
+        <TextWrapper>
+          <DateAndTime>{moment(date).format('LL')}</DateAndTime>
+          <TouchableOpacity>
+            <Icon
+              onPress={() => toggleCalendar(true)}
+              type="MaterialIcons"
+              name="add-circle"
+              size={43}
+              color="#3bc48e"
+            />
+          </TouchableOpacity>
+        </TextWrapper>
+
+        <SelectDateWrapper>
+          {selectedDate.map((d, i) => {
+            return (
+              <View key={i}>
+                <DayText>{d.day}</DayText>
+                <DatesContainer
+                  active={d.key === active}
+                  onPress={() => {
+                    setActive(d.key);
+                    setDate(new Date(d.date.toDate()));
+                  }}>
+                  <Dates active={d.key === active}>
+                    {moment(d.date)
+                      .format('L')
+                      .toString()
+                      .slice(3, 5)}
+                  </Dates>
+                </DatesContainer>
+              </View>
+            );
+          })}
+        </SelectDateWrapper>
+      </DatePickerWrapper>
+      {show && (
+        <DateTimePicker
+          value={date}
+          mode="date"
+          display="default"
+          onChange={(e, d) => {
+            toggleCalendar(false);
+            setSelected(d);
+            setDate(d);
+            setActive(1);
+          }}
+        />
+      )}
+    </>
   );
 };
 
@@ -96,4 +182,4 @@ const DateAndTime = styled.Text`
   margin-right: auto;
 `;
 
-export default DatePicker;
+export default DatePickerComponent;
