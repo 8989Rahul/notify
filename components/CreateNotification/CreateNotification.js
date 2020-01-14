@@ -16,7 +16,7 @@ const CreateNotification = props => {
     : '';
   return (
     <Wrapper>
-      <CreateNotificationHeader />
+      <CreateNotificationHeader navigation={props.navigation} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <Container>
           <Description placeholder="Description" />

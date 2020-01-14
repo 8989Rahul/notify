@@ -3,6 +3,7 @@ import CreateNotification from './CreateNotification/CreateNotification';
 import AddRecipient from './CreateNotification/CreateNotificationHeader/SendMessage/AddRecipient';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {Animated, Easing} from 'react-native';
+import HomeScreen from './HomeScreen/HomeScreen';
 // import MyDatePicker from './CreateNotification/SetDateAndTime/SelectDate';
 const AppNavigator = createStackNavigator(
   {
@@ -10,8 +11,9 @@ const AppNavigator = createStackNavigator(
       screen: CreateNotification,
     },
     AddRecipient: {screen: AddRecipient},
-    // MyDatePicker: {screen: MyDatePicker},
+    HomeScreen: {screen: HomeScreen},
   },
+
   {
     initialRouteName: 'CreateNotification',
     headerMode: 'none',
