@@ -1,6 +1,7 @@
 package com.mypro;
 
 import com.facebook.react.ReactActivity;
+import com.BV.LinearGradient.LinearGradientPackage;
 
 public class MainActivity extends ReactActivity {
 
@@ -10,6 +11,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
+     new LinearGradientPackage();
     return "myPro";
   }
 }
